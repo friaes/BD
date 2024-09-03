@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Orders{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  {% for order in orders %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>{{ order['name'] }} | Customer ID {{ order['cust_no'] }} | Order {{ order['order_no'] }}</h1>
+        </div>
+      </header>
+      <p class="body">{{ order['date'] }}</p>
+      <form action="{{ url_for('order_delete', cust_no=order['cust_no'], order_no=order['order_no'], max_order_no=max_order_no, flag='employee') }}" method = "post">
+         <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+      </form>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>
+      {% block title %}Order Info{% endblock %}
+  </h1>
+    <nav>
+  </nav>
+{% endblock %}
+
+{% block content %}
+
+  {% for containing in containings %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>{{ containing['name'] }} | {{ containing['sku'] }}</h1>
+        </div>
+      </header>
+            <p class="body">{{ containing['price']}}€ x ({{ containing['qty'] }}) = {{ containing['sub_total'] }} </p>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+  <hr>
+  <p class="body">Total: {{ total[0]['total_value']}}  </p>
+  {% if total[0]['order_no'] in paid_orders|map(attribute=0)|list %}
+      <h1>Paid</h1>
+  {% else %}
+  <form action="{{url_for('pay_order', cust_no=total[0]['cust_no'], order_no=total[0]['order_no'], max_order_no=max_order_no) }}" method = "post">
+     <input  type="submit" value="Pay" onclick="return confirm('Are you sure?');">
+  </form>
+  <form action="{{ url_for('order_delete', cust_no=total[0]['cust_no'], order_no=total[0]['order_no'], max_order_no=max_order_no, flag='customer') }}" method = "post">
+     <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+  </form>
+  {% endif %}
+{% endblock %}

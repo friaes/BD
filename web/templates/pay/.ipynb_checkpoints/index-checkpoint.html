@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Orders{% endblock %}</h1>
+  <nav>
+    <ul>
+      <li><a href="{{ url_for('order_create', cust_no=orders[0]['cust_no'], max_order_no=max_order_no) }}">New</a>
+    </ul>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  {% for order in orders %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>{{ order['name'] }} | Order {{ order['order_no'] }}</h1>
+        </div>
+            <a class="action" href="{{ url_for('order_info', order_no=order['order_no'], cust_no=order['cust_no'], max_order_no=max_order_no) }}">Info</a>
+      </header>
+      <div class="about">{{ order['sku'] }}</div>
+      <p class="body">{{ order['date'] }}</p>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}

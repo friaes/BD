@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Main Page{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <article class="post">
+      <header>
+        <div>
+            <h1><a style="text-decoration:none" class="action" href="/main/products">Products</a></h1>
+        </div>
+      </header>
+    </article>
+      <hr>
+<article class="post">
+      <header>
+        <div>
+            <h1><a style="text-decoration:none" class="action" href="/main/suppliers">Suppliers</a></h1>
+        </div>
+      </header>
+    </article>
+      <hr>
+<article class="post">
+      <header>
+        <div>
+            <h1><a style="text-decoration:none" class="action" href="/main/customers">Customers</a></h1>
+        </div>
+      </header>
+    </article>
+      <hr>
+<article class="post">
+      <header>
+        <div>
+            <h1><a style="text-decoration:none" class="action" href="{{ url_for('order_index', max_order_no=max_order_no) }}">Orders</a></h1>
+        </div>
+      </header>
+    </article>
+      <hr>
+<article class="post">
+      <header>
+        <div>
+          <h1><a style="text-decoration:none" class="action" href="{{ url_for('orders_login', max_order_no=max_order_no) }}">Customer orders</a></h1>
+        </div>
+      </header>
+    </article>
+{% endblock %}

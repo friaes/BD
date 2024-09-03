@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Products{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+  {% for product in products %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>{{ product['name'] }} | {{ product['sku'] }}</h1>
+          <div class="about">{{ product['description'] }}</div>
+        </div>
+      </header>
+      <p class="body">€ {{ product['price'] }}</p>
+      <label for="qty">Quantity:</label>
+      <input name="qty" id="qty" type="number" min="0" step="1" placeholder="0" value="{{ request.form['qty'] or 0}}">
+        <hr>
+    </article>
+  {% endfor %}
+      <hr>
+      <form>
+        <input type="submit" value="Place Order" onclick= "return confirm('Are you sure?');">
+      </form>    
+{% endblock %}
+

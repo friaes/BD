@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Customers{% endblock %}</h1>
+  <nav>
+    <ul>
+        <li><a href="{{ url_for('customer_create', max_cust_no=max_cust_no) }}">New</a>
+    </ul>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  {% for customer in customers %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>{{ customer['name'] }} | Customer ID {{ customer['cust_no'] }}</h1>
+        </div>
+      </header>
+      <p class="body">Phone nº: {{ customer['phone'] }}</p>
+      <p class="body">Address: {{ customer['address'] }}</p>
+        <header>
+          <form action="{{ url_for('customer_delete', cust_no=customer['cust_no']) }}" method = "post">
+            <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+          </form>
+        </header>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
